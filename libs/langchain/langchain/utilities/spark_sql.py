@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import traceback
 from typing import TYPE_CHECKING, Any, Iterable, List, Optional
 
 if TYPE_CHECKING:
@@ -182,5 +183,6 @@ class SparkSQL:
         try:
             return self.run(command, fetch)
         except Exception as e:
-            """Format the error message"""
-            return f"Error: {e}"
+            error = traceback.format_exc()
+            stack_trace = error.split('\n')
+            return stack_trace[len(stack_trace) - 10:len(stack_trace) + 1]
